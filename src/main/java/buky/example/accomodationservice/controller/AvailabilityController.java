@@ -14,9 +14,15 @@ public class AvailabilityController {
     private final AccommodationService accommodationService;
 
 
-    @PostMapping("/create/{id}")
+    @PostMapping("/accommodation/{id}")
     public Accommodation createAvailability(@PathVariable Long id, @RequestBody AccommodationAvailability dto) {
         return accommodationService.createAvailability(id, dto);
+    }
+
+    @PutMapping("/accommodation/{id}")
+    public Accommodation updateAvailability(@PathVariable Long id, @RequestBody AccommodationAvailability dto) {
+        // TODO check with reservation service! can change only for ranges with no ongoing reservations!
+        return null;
     }
 
 

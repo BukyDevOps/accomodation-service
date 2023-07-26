@@ -43,6 +43,8 @@ public class AccommodationService {
 
     public Accommodation createAvailability(Long id, AccommodationAvailability dto) {
         Accommodation accommodation = findOneAccommodation(id);
+        if (accommodation.getAvailability() != null)
+            throw new RuntimeException("Availability already specified");
         dto.setAccommodation(accommodation);
         var rangePeriods = rangePeriodRepository.saveAll(dto.getAllRangePeriods());
         var patternPeriods = patternPeriodRepository.saveAll(dto.getAllPatternPeriods());
