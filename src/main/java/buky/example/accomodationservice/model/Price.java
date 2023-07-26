@@ -18,6 +18,7 @@ public class Price {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private double basePrice;
+    private boolean byPerson;
     @OneToMany
     Set<PriceRule> priceRules;
 

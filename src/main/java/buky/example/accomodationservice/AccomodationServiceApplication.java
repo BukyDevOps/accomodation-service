@@ -67,6 +67,7 @@ public class AccomodationServiceApplication implements CommandLineRunner {
                 .price(Price
                         .builder()
                         .basePrice(175.0)
+                        .byPerson(true)
                         .priceRules(
                                 Set.of(PriceRule
                                         .builder()
