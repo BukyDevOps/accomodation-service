@@ -30,7 +30,7 @@ public class Accommodation {
     @ManyToOne
     private Location location;
     @OneToOne
-    private AccommodationAvailability availabilities;
+    private AccommodationAvailability availability;
 
 
 }

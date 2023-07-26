@@ -1,5 +1,6 @@
 package buky.example.accomodationservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class AccommodationAvailability {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @JsonIgnore
     @ManyToOne
     private Accommodation accommodation;
     @OneToMany

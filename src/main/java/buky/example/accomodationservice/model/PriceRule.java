@@ -15,6 +15,7 @@ public class PriceRule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private double specialPrice;
     @OneToOne
     private RangePeriod rangePeriod;
     @OneToOne
