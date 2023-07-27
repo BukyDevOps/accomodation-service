@@ -39,6 +39,7 @@ public class AccomodationServiceApplication implements CommandLineRunner {
                 .build();
         var accommodation1 = Accommodation.builder()
                 .location(location1)
+                .autoApproveReservation(true)
                 .userId(1L)
                 .maxGuestNum(10)
                 .minGuestNum(1)
