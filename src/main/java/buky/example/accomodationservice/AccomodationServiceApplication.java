@@ -1,15 +1,17 @@
 package buky.example.accomodationservice;
 
-import buky.example.accomodationservice.model.Accommodation;
-import buky.example.accomodationservice.model.Location;
+import buky.example.accomodationservice.model.*;
+import buky.example.accomodationservice.model.enumerations.DayOfWeek;
 import buky.example.accomodationservice.repository.AccommodationRepository;
 import buky.example.accomodationservice.repository.LocationRepository;
+import buky.example.accomodationservice.service.AccommodationService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +21,7 @@ public class AccomodationServiceApplication implements CommandLineRunner {
 
     private final AccommodationRepository accommodationRepository;
     private final LocationRepository locationRepository;
+    private final AccommodationService accommodationService;
 
     public static void main(String[] args) {
         SpringApplication.run(AccomodationServiceApplication.class, args);
@@ -47,5 +50,38 @@ public class AccomodationServiceApplication implements CommandLineRunner {
 
         locationRepository.saveAll(List.of(location1));
         accommodationRepository.saveAll(List.of(accommodation1));
+
+        var accommodationAvailability = AccommodationAvailability
+                .builder()
+                .allPatternPeriods(
+                        List.of(PatternPeriod
+                                .builder()
+                                .dayOfWeek(Set.of(DayOfWeek.MONDAY))
+                                .build()))
+                .allRangePeriods(
+                        List.of(RangePeriod
+                                .builder()
+                                .startDate(new Date())
+                                .endDate(new Date())
+                                .build()))
+                .price(Price
+                        .builder()
+                        .basePrice(175.0)
+                        .byPerson(true)
+                        .priceRules(
+                                Set.of(PriceRule
+                                        .builder()
+                                        .specialPrice(170.0)
+                                        .patternPeriod(
+                                                PatternPeriod
+                                                        .builder()
+                                                        .dayOfWeek(Set.of(DayOfWeek.MONDAY, DayOfWeek.TUESDAY))
+                                                        .build())
+                                        .build()))
+                        .build())
+                .build();
+
+
+        accommodationService.createAvailability(1L, accommodationAvailability);
     }
 }

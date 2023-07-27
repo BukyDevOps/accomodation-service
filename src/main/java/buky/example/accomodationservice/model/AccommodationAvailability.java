@@ -1,5 +1,6 @@
 package buky.example.accomodationservice.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,30 +8,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-public class Accommodation {
+public class AccommodationAvailability {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long userId;
-    private String name;
-    private String description;
-    private int minGuestNum;
-    private int maxGuestNum;
-    @ElementCollection
-    private Set<String> tags;
-    @ElementCollection
-    private Set<String> images;
+    @JsonIgnore
     @ManyToOne
-    private Location location;
+    private Accommodation accommodation;
+    @OneToMany
+    List<RangePeriod> allRangePeriods;
+    @OneToMany
+    List<PatternPeriod> allPatternPeriods;
     @OneToOne
-    private AccommodationAvailability availability;
-
+    private Price price;
 
 }
