@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,8 +20,9 @@ public class Accommodation {
     private Long userId;
     private String name;
     private String description;
-    private int minGuestNum;
+    private int minGuestNum = 0;
     private int maxGuestNum;
+    private boolean autoApproveReservation = false;
     @ElementCollection
     private Set<String> tags;
     @ElementCollection
