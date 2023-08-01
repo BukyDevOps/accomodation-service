@@ -1,7 +1,6 @@
 package buky.example.accomodationservice;
 
 import buky.example.accomodationservice.model.*;
-import buky.example.accomodationservice.model.enumerations.DayOfWeek;
 import buky.example.accomodationservice.repository.AccommodationRepository;
 import buky.example.accomodationservice.repository.LocationRepository;
 import buky.example.accomodationservice.service.AccommodationService;
@@ -11,7 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -62,8 +62,8 @@ public class AccomodationServiceApplication implements CommandLineRunner {
                 .allRangePeriods(
                         List.of(RangePeriod
                                 .builder()
-                                .startDate(new Date())
-                                .endDate(new Date())
+                                .startDate(LocalDate.now())
+                                .endDate(LocalDate.now().plusDays(10))
                                 .build()))
                 .price(Price
                         .builder()
