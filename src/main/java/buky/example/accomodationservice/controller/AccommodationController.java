@@ -34,4 +34,9 @@ public class AccommodationController {
     public void deleteById(@PathVariable Long id) {
         accommodationService.deleteAccommodation(id);
     }
+
+    @GetMapping("/host/{id}")
+    public Long getHostIdForAccommodation(@PathVariable Long id) {
+        return accommodationService.getHostIdForAccommodation(id);
+    }
 }
