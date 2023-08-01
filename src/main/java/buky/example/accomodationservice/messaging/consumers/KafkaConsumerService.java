@@ -13,7 +13,7 @@ public class KafkaConsumerService {
 
     private final AccommodationService accommodationService;
 
-    @KafkaListener(topics = "user-deletion-permission-topic",containerFactory = "accommodationRatingListenerContainerFactory")
+    @KafkaListener(topics = "user-deletion-permission-topic",containerFactory = "userDeletionResponse")
     public void userDeletionPermission(UserDeletionResponseMessage message) {
         accommodationService.userDeleted(message);
     }
