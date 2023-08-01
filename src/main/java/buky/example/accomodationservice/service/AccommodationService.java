@@ -1,9 +1,11 @@
 package buky.example.accomodationservice.service;
 
 import buky.example.accomodationservice.exceptions.NotFoundException;
+import buky.example.accomodationservice.messaging.messages.UserDeletionResponseMessage;
 import buky.example.accomodationservice.model.Accommodation;
 import buky.example.accomodationservice.model.AccommodationAvailability;
 import buky.example.accomodationservice.model.PriceRule;
+import buky.example.accomodationservice.model.enumerations.Role;
 import buky.example.accomodationservice.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -89,5 +91,15 @@ public class AccommodationService {
                 .orElseThrow(() -> new NotFoundException("Accommodation is not found!"));
 
         return accommodation.getUserId();
+    }
+
+    public void userDeleted(UserDeletionResponseMessage message) {
+        if (!message.isPermitted() || !message.getRole().equals(Role.HOST))
+            return;
+        deleteAllAccommodationsByUser(message.getUserId());
+    }
+
+    private void deleteAllAccommodationsByUser(Long userId) {
+        accommodationRepository.deleteByUserId(userId);
     }
 }
