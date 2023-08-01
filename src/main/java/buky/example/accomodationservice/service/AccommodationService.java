@@ -84,4 +84,10 @@ public class AccommodationService {
 
     }
 
+    public Long getHostIdForAccommodation(Long id) {
+        Accommodation accommodation = accommodationRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Accommodation is not found!"));
+
+        return accommodation.getUserId();
+    }
 }
