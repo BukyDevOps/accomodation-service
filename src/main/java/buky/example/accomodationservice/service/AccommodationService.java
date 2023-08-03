@@ -4,7 +4,6 @@ import buky.example.accomodationservice.exceptions.NotFoundException;
 import buky.example.accomodationservice.messaging.messages.UserDeletionResponseMessage;
 import buky.example.accomodationservice.model.Accommodation;
 import buky.example.accomodationservice.model.AccommodationAvailability;
-import buky.example.accomodationservice.model.PriceRule;
 import buky.example.accomodationservice.model.enumerations.Role;
 import buky.example.accomodationservice.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -101,5 +100,13 @@ public class AccommodationService {
 
     private void deleteAllAccommodationsByUser(Long userId) {
         accommodationRepository.deleteByUserId(userId);
+    }
+
+    public List<Long> getAccommodationIdsByOwner(Long id) {
+        return accommodationRepository
+                .findIdsByUserId(id)
+                .stream()
+                .map(Accommodation::getId)
+                .collect(Collectors.toList());
     }
 }

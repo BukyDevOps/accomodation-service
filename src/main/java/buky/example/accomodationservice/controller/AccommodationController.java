@@ -39,4 +39,9 @@ public class AccommodationController {
     public Long getHostIdForAccommodation(@PathVariable Long id) {
         return accommodationService.getHostIdForAccommodation(id);
     }
+
+    @GetMapping("/ids-by-user/{id}")
+    public List<Long> getAccommodationIdsByOwner(@PathVariable Long id) {
+        return accommodationService.getAccommodationIdsByOwner(id);
+    }
 }
