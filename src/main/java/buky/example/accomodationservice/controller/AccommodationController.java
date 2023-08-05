@@ -1,5 +1,7 @@
 package buky.example.accomodationservice.controller;
 
+import buky.example.accomodationservice.dto.AccommodationResultDTO;
+import buky.example.accomodationservice.dto.SearchDto;
 import buky.example.accomodationservice.exceptions.NotFoundException;
 import buky.example.accomodationservice.model.Accommodation;
 import buky.example.accomodationservice.service.AccommodationService;
@@ -43,5 +45,10 @@ public class AccommodationController {
     @GetMapping("/ids-by-user/{id}")
     public List<Long> getAccommodationIdsByOwner(@PathVariable Long id) {
         return accommodationService.getAccommodationIdsByOwner(id);
+    }
+
+    @GetMapping("/search")
+    public List<AccommodationResultDTO> searchAccommodation(@RequestParam SearchDto searchDto) {
+        return accommodationService.search(searchDto);
     }
 }
