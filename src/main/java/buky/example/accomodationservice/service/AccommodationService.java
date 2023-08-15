@@ -35,6 +35,7 @@ public class AccommodationService {
         locationRepository.save(accommodation.getLocation());
         accommodation.setUserId(userId);
         return accommodationRepository.save(accommodation);
+
     }
 
     public Accommodation findOneAccommodation(Long id) throws NotFoundException {

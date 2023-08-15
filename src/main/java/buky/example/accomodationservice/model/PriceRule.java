@@ -16,9 +16,9 @@ public class PriceRule {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private double specialPrice;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private RangePeriod rangePeriod;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PatternPeriod patternPeriod;
 
 }

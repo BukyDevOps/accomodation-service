@@ -27,9 +27,9 @@ public class Accommodation {
     private Set<String> tags;
     @ElementCollection
     private Set<String> images;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Location location;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private AccommodationAvailability availability;
 
 
