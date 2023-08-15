@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,8 +31,9 @@ public class AccommodationService {
     private final ReservationClient reservationClient;
     private final double EARTH_RADIUS = 6371000; // Earth's radius in meters
 
-    public Accommodation createAccommodation(Accommodation accommodation) {
+    public Accommodation createAccommodation(Accommodation accommodation, Long userId) {
         locationRepository.save(accommodation.getLocation());
+        accommodation.setUserId(userId);
         return accommodationRepository.save(accommodation);
     }
 
