@@ -249,4 +249,12 @@ public class AccommodationService {
 
         return EARTH_RADIUS * c;
     }
+
+    public Accommodation updateAccommodation(Accommodation dto, Long userId) {
+
+        if(dto.getUserId() != userId)
+            return null;
+        return accommodationRepository.save(dto);
+
+    }
 }

@@ -34,6 +34,12 @@ public class AccommodationController {
         return accommodationService.createAccommodation(dto, userId);
     }
 
+    @PutMapping()
+    @HasRole("HOST")
+    public Accommodation update(@RequestBody Accommodation dto, Long userId) {
+        return accommodationService.updateAccommodation(dto, userId);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
         accommodationService.deleteAccommodation(id);
