@@ -19,7 +19,7 @@ public class Price {
     private Long id;
     private double basePrice;
     private boolean byPerson;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     Set<PriceRule> priceRules;
 
 }

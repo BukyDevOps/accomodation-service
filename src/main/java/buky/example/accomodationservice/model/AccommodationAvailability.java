@@ -22,11 +22,11 @@ public class AccommodationAvailability {
     @JsonIgnore
     @ManyToOne
     private Accommodation accommodation;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<RangePeriod> allRangePeriods;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<PatternPeriod> allPatternPeriods;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Price price;
 
 }

@@ -4,6 +4,7 @@ import buky.example.accomodationservice.dto.AccommodationResultDTO;
 import buky.example.accomodationservice.dto.SearchDto;
 import buky.example.accomodationservice.exceptions.NotFoundException;
 import buky.example.accomodationservice.model.Accommodation;
+import buky.example.accomodationservice.security.HasRole;
 import buky.example.accomodationservice.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,9 @@ public class AccommodationController {
     }
 
     @PostMapping()
-    public Accommodation create(@RequestBody Accommodation dto) {
-        return accommodationService.createAccommodation(dto);
+    @HasRole("HOST")
+    public Accommodation create(@RequestBody Accommodation dto, Long userId) {
+        return accommodationService.createAccommodation(dto, userId);
     }
 
     @DeleteMapping("/{id}")
