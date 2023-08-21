@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -122,8 +120,10 @@ public class AccommodationService {
         List<Long> unavailableAccommodations = reservationClient.getUnavailableAccommodations(searchDto.getStartDate(),
                 searchDto.getEndDate());
 
+        unavailableAccommodations.add(-1L);
+
         List<Accommodation> filteredAccommodations = accommodationRepository
-                .findAllByGuestNumberExceptUnavailableOnes(searchDto.getGuestsNum(), unavailableAccommodations);
+                .test(searchDto.getGuestsNum(), unavailableAccommodations);
 
         filteredAccommodations = filteredAccommodations.stream().filter(a -> accommodationAvailable(a, searchDto.getStartDate(), searchDto.getEndDate())).collect(Collectors.toList());
 
@@ -137,8 +137,10 @@ public class AccommodationService {
                     .distance(calculateDistance(searchDto.getLat(), searchDto.getLon(),
                             a.getLocation().getLat(), a.getLocation().getLon())).build();
         }).toList();
-        results.sort((o1, o2) -> (int) (o1.getDistance() - o2.getDistance()));
-        return results;
+
+        List<AccommodationResultDTO> mutableResults = new ArrayList<>(results);
+        mutableResults.sort(Comparator.comparingDouble(AccommodationResultDTO::getDistance));
+        return mutableResults;
     }
 
     private boolean accommodationAvailable(Accommodation accommodation, LocalDate reservationStart, LocalDate reservationEnd) {

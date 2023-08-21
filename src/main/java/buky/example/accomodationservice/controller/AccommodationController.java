@@ -50,7 +50,7 @@ public class AccommodationController {
     }
 
     @GetMapping("/search")
-    public List<AccommodationResultDTO> searchAccommodation(@RequestParam SearchDto searchDto) {
+    public List<AccommodationResultDTO> searchAccommodation(SearchDto searchDto) {
         return accommodationService.search(searchDto);
     }
 }
