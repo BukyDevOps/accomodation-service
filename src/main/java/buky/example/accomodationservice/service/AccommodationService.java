@@ -8,8 +8,10 @@ import buky.example.accomodationservice.messaging.messages.UserDeletionResponseM
 import buky.example.accomodationservice.model.*;
 import buky.example.accomodationservice.model.enumerations.Role;
 import buky.example.accomodationservice.repository.*;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -30,6 +32,7 @@ public class AccommodationService {
     private final PriceRuleRepository priceRuleRepository;
     private final ReservationClient reservationClient;
     private final double EARTH_RADIUS = 6371000; // Earth's radius in meters
+    private final EntityManager entityManager;
 
     public Accommodation createAccommodation(Accommodation accommodation, Long userId) {
         locationRepository.save(accommodation.getLocation());
@@ -250,11 +253,13 @@ public class AccommodationService {
         return EARTH_RADIUS * c;
     }
 
+    @Transactional
     public Accommodation updateAccommodation(Accommodation dto, Long userId) {
 
         if(dto.getUserId() != userId)
             return null;
-        return accommodationRepository.save(dto);
+
+        return entityManager.merge(dto);
 
     }
 }
