@@ -41,8 +41,9 @@ public class AccommodationController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
-        accommodationService.deleteAccommodation(id);
+    @HasRole("HOST")
+    public void deleteById(@PathVariable Long id, Long userId) {
+        accommodationService.deleteAccommodation(id, userId);
     }
 
     @GetMapping("/host/{id}")
@@ -53,6 +54,12 @@ public class AccommodationController {
     @GetMapping("/ids-by-user/{id}")
     public List<Long> getAccommodationIdsByOwner(@PathVariable Long id) {
         return accommodationService.getAccommodationIdsByOwner(id);
+    }
+
+    @GetMapping("/get-all-host")
+    @HasRole("HOST")
+    public List<Accommodation> getAccommodationByHost(Long userId) {
+        return accommodationService.getAllForHost(userId);
     }
 
     @GetMapping("/search")
