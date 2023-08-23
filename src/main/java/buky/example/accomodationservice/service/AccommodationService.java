@@ -47,8 +47,12 @@ public class AccommodationService {
         return accommodationRepository.findAll();
     }
 
-    public void deleteAccommodation(Long id) {
-        accommodationRepository.deleteById(id);
+    public void deleteAccommodation(Long id, Long userId) {
+        var acc = accommodationRepository.findById(id);
+        if (acc.isPresent() && acc.get().getUserId().equals(userId))
+            accommodationRepository.deleteById(id);
+        else
+            throw new NotFoundException("Not Available!");
     }
 
     public Accommodation createAvailability(Long id, AccommodationAvailability dto) {
@@ -260,10 +264,14 @@ public class AccommodationService {
     @Transactional
     public Accommodation updateAccommodation(Accommodation dto, Long userId) {
 
-        if(dto.getUserId() != userId)
+        if (dto.getUserId() != userId)
             return null;
 
         return entityManager.merge(dto);
 
+    }
+
+    public List<Accommodation> getAllForHost(Long userId) {
+        return accommodationRepository.findIdsByUserId(userId);
     }
 }
