@@ -224,9 +224,11 @@ public class AccommodationService {
     private double calculateDayPrice(Price priceList, LocalDate day) {
         //if any rule applies return
         for (PriceRule rule : priceList.getPriceRules()) {
-            if (patternRuleAppliesToDate(rule.getPatternPeriod(), day))
+            if (rule.getPatternPeriod() != null &&
+                    patternRuleAppliesToDate(rule.getPatternPeriod(), day))
                 return rule.getSpecialPrice();
-            if (rangeRuleAppliesToDate(rule.getRangePeriod(), day)) {
+            if (rule.getRangePeriod() != null &&
+                    rangeRuleAppliesToDate(rule.getRangePeriod(), day)) {
                 return rule.getSpecialPrice();
             }
         }
