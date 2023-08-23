@@ -1,0 +1,29 @@
+type Query {
+    accommodationById(id: ID!): Accommodation
+}
+
+type Accommodation {
+    id: ID!
+    user: User
+    name: String!
+    description: String!
+    tags: [String]
+    images: [String]
+    location: Location!
+}
+
+type User {
+    id: ID!
+    username: String
+    name: String
+    surname: String
+    rating: Float
+}
+
+type Location {
+    id: ID!
+    name: String
+    fullAddress: String
+    lon: Float!
+    lat: Float!
+}
