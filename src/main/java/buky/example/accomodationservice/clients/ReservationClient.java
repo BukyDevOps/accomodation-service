@@ -21,7 +21,7 @@ public class ReservationClient {
     private String baseURL;
 
     public List<Long> getUnavailableAccommodations(LocalDate start, LocalDate end) {
-        String endpoint = baseURL + "/unavailable?start=" + start.toString() + "&accommodationId=" + end.toString();
+        String endpoint = baseURL + "/api/reservation/unavailable?start=" + start.toString() + "&accommodationId=" + end.toString();
         return sendRequest(endpoint);
     }
 

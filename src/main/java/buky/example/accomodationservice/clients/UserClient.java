@@ -8,10 +8,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class UserClient {
@@ -22,7 +18,7 @@ public class UserClient {
     private String baseURL;
 
     public User getUserById(Long id) {
-        String endpoint = baseURL + "/" + id;
+        String endpoint = baseURL + "/api/users/" + id;
         return sendRequest(endpoint);
     }
 
