@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: JDK Setup
         uses: actions/setup-java@v2
@@ -41,10 +43,6 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/buky-accomodation:latest .
-
-
-      - name: Publish Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/buky-accomodation:latest
 
       - name: Semantic versioning
         id: versioning
