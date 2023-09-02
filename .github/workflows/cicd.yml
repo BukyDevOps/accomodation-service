@@ -42,10 +42,6 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/buky-accomodation:latest .
 
-
-      - name: Publish Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/buky-accomodation:latest
-
       - name: Semantic versioning
         id: versioning
         uses: paulhatch/semantic-version@v5.1.0
