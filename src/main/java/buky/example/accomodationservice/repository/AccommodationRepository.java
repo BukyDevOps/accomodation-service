@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
-    long deleteByUserId(Long userId);
+    List<Accommodation> deleteByUserId(Long userId);
 
     List<Accommodation> findIdsByUserId(Long userId);
 

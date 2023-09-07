@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AccommodationService {
 
     private final LocationRepository locationRepository;
@@ -106,12 +107,14 @@ public class AccommodationService {
     }
 
     public void userDeleted(UserDeletionResponseMessage message) {
+        System.out.println("usao u userDelete");
         if (!message.isPermitted() || !message.getRole().equals(Role.HOST))
             return;
         deleteAllAccommodationsByUser(message.getUserId());
     }
 
     private void deleteAllAccommodationsByUser(Long userId) {
+        System.out.println("Pozivam accommodationRepository.deleteByUserId("+userId);
         accommodationRepository.deleteByUserId(userId);
     }
 
