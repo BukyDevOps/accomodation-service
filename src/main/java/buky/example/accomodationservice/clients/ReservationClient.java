@@ -20,15 +20,15 @@ public class ReservationClient {
     @Value(value = "${reservation.BaseURL}")
     private String baseURL;
 
-    public List<Long> getUnavailableAccommodations(LocalDate start, LocalDate end) {
-        String endpoint = baseURL + "/unavailable?start=" + start.toString() + "&accommodationId=" + end.toString();
+    public List<Integer> getUnavailableAccommodations(LocalDate start, LocalDate end) {
+        String endpoint = baseURL + "/unavailable?start=" + start.toString() + "&end=" + end.toString();
         return sendRequest(endpoint);
     }
 
-    private List<Long> sendRequest(String endpoint) {
+    private List<Integer> sendRequest(String endpoint) {
         try {
-            ResponseEntity<List<Long>> responseEntity = restTemplate.exchange(endpoint, HttpMethod.GET,
-                    new HttpEntity<List<Long>>(new HttpHeaders()),
+            ResponseEntity<List<Integer>> responseEntity = restTemplate.exchange(endpoint, HttpMethod.GET,
+                    new HttpEntity<List<Integer>>(new HttpHeaders()),
                     ParameterizedTypeReference.forType(List.class));
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {

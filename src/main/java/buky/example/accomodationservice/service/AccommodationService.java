@@ -127,16 +127,20 @@ public class AccommodationService {
     }
 
     public List<AccommodationResultDTO> search(SearchDto searchDto) {
-        List<Long> unavailableAccommodations = reservationClient.getUnavailableAccommodations(searchDto.getStartDate(),
+        List<Integer> unavailableAccommodations = reservationClient.getUnavailableAccommodations(searchDto.getStartDate(),
                 searchDto.getEndDate());
 
-        unavailableAccommodations.add(-1L);
+        Collection<Long> convertedIds = unavailableAccommodations.stream()
+                .map(Long::valueOf).toList();
+
+        if(convertedIds.isEmpty())
+            convertedIds.add(-1L);
 
         List<Accommodation> filteredAccommodations = accommodationRepository
-                .test(searchDto.getGuestsNum(), unavailableAccommodations);
-
+                .test((long) searchDto.getGuestsNum(), convertedIds);
+        System.out.println("---------------USAO OVDE 2--------------");
         filteredAccommodations = filteredAccommodations.stream().filter(a -> accommodationAvailable(a, searchDto.getStartDate(), searchDto.getEndDate())).collect(Collectors.toList());
-
+        System.out.println("---------------USAO OVDE 3--------------");
         List<AccommodationResultDTO> results = filteredAccommodations.stream().map(a -> {
             double totalPrice = calculateTotalPrice(a, searchDto.getStartDate(), searchDto.getEndDate());
 
@@ -147,7 +151,7 @@ public class AccommodationService {
                     .distance(calculateDistance(searchDto.getLat(), searchDto.getLon(),
                             a.getLocation().getLat(), a.getLocation().getLon())).build();
         }).toList();
-
+        System.out.println("---------------USAO OVDE 4--------------");
         List<AccommodationResultDTO> mutableResults = new ArrayList<>(results);
         mutableResults.sort(Comparator.comparingDouble(AccommodationResultDTO::getDistance));
         return mutableResults;
