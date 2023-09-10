@@ -21,5 +21,5 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
     List<Accommodation> findAllByGuestNumberExceptUnavailableOnes(int guestNum, List<Long> unavailableAccommodations);
 
     @Query("select a from Accommodation a where a.minGuestNum <= ?1 and a.maxGuestNum >= ?1 and a.id not in ?2")
-    List<Accommodation> test(int guestNum, Collection<Long> ids);
+    List<Accommodation> test(Long guestNum, Collection<Long> ids);
 }
